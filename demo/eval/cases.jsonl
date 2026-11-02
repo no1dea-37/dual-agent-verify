@@ -1,0 +1,40 @@
+{"id": 1, "claim": "托福成绩有效期为两年。", "label": "supported", "note": "ETS 官方规定"}
+{"id": 2, "claim": "雅思成绩有效期为两年。", "label": "supported", "note": "官方规定"}
+{"id": 3, "claim": "托福口语满分为 30 分。", "label": "supported", "note": ""}
+{"id": 4, "claim": "雅思总分满分为 9 分。", "label": "supported", "note": ""}
+{"id": 5, "claim": "GRE 成绩有效期为五年。", "label": "supported", "note": ""}
+{"id": 6, "claim": "复旦大学位于上海。", "label": "supported", "note": ""}
+{"id": 7, "claim": "MIT 位于马萨诸塞州剑桥市。", "label": "supported", "note": ""}
+{"id": 8, "claim": "华盛顿大学（University of Washington）位于西雅图。", "label": "supported", "note": ""}
+{"id": 9, "claim": "康奈尔大学位于纽约州伊萨卡。", "label": "supported", "note": ""}
+{"id": 10, "claim": "苹果公司于 2007 年发布第一代 iPhone。", "label": "supported", "note": ""}
+{"id": 11, "claim": "图灵奖由美国计算机学会（ACM）颁发。", "label": "supported", "note": ""}
+{"id": 12, "claim": "arXiv 创办于 1991 年。", "label": "supported", "note": ""}
+{"id": 13, "claim": "光速约为每秒 30 万公里。", "label": "supported", "note": ""}
+{"id": 14, "claim": "Python 的 GIL 会限制多线程并行执行 Python 字节码。", "label": "supported", "note": ""}
+{"id": 15, "claim": "CSS 的 flex 与 grid 都可以用于页面布局。", "label": "supported", "note": ""}
+{"id": 16, "claim": "中国国庆节是每年 10 月 1 日。", "label": "supported", "note": ""}
+{"id": 17, "claim": "高考通常在每年 6 月举行。", "label": "supported", "note": ""}
+{"id": 18, "claim": "DeepSeek 的 API 提供与 OpenAI 兼容的接口格式。", "label": "supported", "note": ""}
+{"id": 19, "claim": "导师在 9 月回信里说过会在 11 月留一个名额。", "label": "unsupported", "note": "无原话可引，疑似补全的承诺"}
+{"id": 20, "claim": "张老师承诺过 12 月可以让我进组。", "label": "unsupported", "note": "无原话可引"}
+{"id": 21, "claim": "据说清华每年本科录取一万人。", "label": "unsupported", "note": "无出处，数字也偏高"}
+{"id": 22, "claim": "有研究证明双 agent 验证能把幻觉降低 90%。", "label": "unsupported", "note": "无具体研究可引"}
+{"id": 23, "claim": "某高校 2026 年期中考试全部安排在 11 月第一周。", "label": "unsupported", "note": "过于具体，无法核实"}
+{"id": 24, "claim": "某高校规定本科生必须参加 ACM 竞赛才能毕业。", "label": "unsupported", "note": "无出处"}
+{"id": 25, "claim": "DeepSeek V4 已经开源。", "label": "unsupported", "note": "无法确认"}
+{"id": 26, "claim": "大多数人学一门新语言只要一周就能流利交流。", "label": "unsupported", "note": "无依据"}
+{"id": 27, "claim": "语言模型越大，事实准确性一定越高。", "label": "unsupported", "note": "过度简化，无依据"}
+{"id": 28, "claim": "早睡早起的人一定比熬夜的人更聪明。", "label": "unsupported", "note": "无依据"}
+{"id": 29, "claim": "雅思成绩有效期为三年。", "label": "refuted", "note": "官方为两年"}
+{"id": 30, "claim": "托福成绩永久有效。", "label": "refuted", "note": "有效期为两年"}
+{"id": 31, "claim": "哈佛大学位于纽约市。", "label": "refuted", "note": "在剑桥市（马萨诸塞州）"}
+{"id": 32, "claim": "斯坦福大学位于波士顿。", "label": "refuted", "note": "在加州斯坦福"}
+{"id": 33, "claim": "Python 3.12 已经移除了 GIL。", "label": "refuted", "note": "GIL 仍在，仅 3.13 起有实验性无 GIL 构建"}
+{"id": 34, "claim": "MIT 本科学费每年约一万美元。", "label": "refuted", "note": "实际远高于此"}
+{"id": 35, "claim": "Windows 11 的默认浏览器是 Chrome。", "label": "refuted", "note": "默认是 Edge"}
+{"id": 36, "claim": "2023 年诺贝尔文学奖颁给了残雪。", "label": "refuted", "note": "2023 年为 Jon Fosse"}
+{"id": 37, "claim": "1 海里等于 1.6 公里。", "label": "refuted", "note": "约为 1.852 公里"}
+{"id": 38, "claim": "建议现在就发邮件，态度强硬一点。", "label": "advice", "note": "建议层只打分不判对错"}
+{"id": 39, "claim": "你应该先考托福再考虑科研。", "label": "advice", "note": ""}
+{"id": 40, "claim": "最好别参加任何竞赛。", "label": "advice", "note": ""}

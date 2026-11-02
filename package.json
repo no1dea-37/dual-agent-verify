@@ -1,0 +1,19 @@
+{
+  "name": "dsh-verify",
+  "version": "0.0.1",
+  "description": "双 agent 验证器：核查回答里的事实/引用/建议，返回判定与修订稿。",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "*"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "verification",
+    "hallucination"
+  ]
+}
