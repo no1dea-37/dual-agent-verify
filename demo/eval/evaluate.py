@@ -19,6 +19,9 @@ import sys
 from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+DEMO = os.path.dirname(HERE)
+if DEMO not in sys.path:
+    sys.path.insert(0, DEMO)
 CASES = os.path.join(HERE, "cases.jsonl")
 REPORT = os.path.join(HERE, "report.md")
 
@@ -110,6 +113,32 @@ def metrics(rows):
     }
 
 
+def calibration_report(rows):
+    """用跑出来的结果拟合保序回归，按确定性留出集评估校准前后。"""
+    import calibrate
+
+    valid = [r for r in rows if r["pred"] in LABELS]
+    samples = [(r["confidence"], r["pred"] == r["label"]) for r in valid]
+    train = [s for i, s in enumerate(samples) if i % 3 != 0]
+    test = [s for i, s in enumerate(samples) if i % 3 == 0]
+    if not train or not test:
+        return "样本太少，跳过校准"
+    blocks = calibrate.fit(train)
+    raw_brier = calibrate.brier(test)
+    cal_brier = calibrate.brier(test, blocks)
+    raw_acc = sum(1 for c, ok in test if (c >= 0.5) == ok) / len(test)
+    cal_acc = sum(1 for c, ok in test if (calibrate.apply(blocks, c) >= 0.5) == ok) / len(test)
+    lines = [
+        f"留出集：训练 {len(train)} / 测试 {len(test)}",
+        "校准块（区间 → 实测正确率）：",
+    ]
+    for lo, hi, val in blocks:
+        lines.append(f"  [{lo:.2f}, {hi:.2f}] → {val:.2f}")
+    lines.append(f"Brier：原始 {raw_brier:.4f} → 校准 {cal_brier:.4f}")
+    lines.append(f"准确率（阈值 0.5）：原始 {raw_acc:.2%} → 校准 {cal_acc:.2%}")
+    return "\n".join(lines)
+
+
 def fmt(m, skipped):
     lines = []
     lines.append(f"样本：{m['n']} 条（另有 {skipped} 条建议样本跳过，{m['errors']} 条预测失败）")
@@ -150,7 +179,10 @@ def main():
 
     rows, skipped = evaluate(cases, verify)
     m = metrics(rows)
-    text = fmt(m, skipped)
+    parts = [fmt(m, skipped)]
+    if "--calibrate" in sys.argv:
+        parts.append("置信度校准：\n" + calibration_report(rows))
+    text = "\n\n".join(parts)
     print(text)
 
     os.makedirs(os.path.dirname(REPORT), exist_ok=True)

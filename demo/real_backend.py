@@ -13,7 +13,14 @@
 
 import json
 import os
+import sys
 import urllib.request
+
+try:
+    import prompts
+except ImportError:  # 从别的目录导入本模块时，把 demo/ 加进搜索路径
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import prompts
 
 BASE_URL = os.environ.get("LLM_BASE_URL", "https://api.deepseek.com/v1")
 API_KEY = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("LLM_API_KEY", "")
@@ -56,10 +63,7 @@ def llm_draft(question):
         [
             {
                 "role": "system",
-                "content": (
-                    "你是给出建议的助手。直接给建议，口吻可以笃定一点"
-                    "（这是为了测试验证器的场景），可以自然地写一些引用。"
-                ),
+                "content": prompts.DRAFT_SYSTEM,
             },
             {"role": "user", "content": question},
         ]
@@ -72,10 +76,7 @@ def llm_revise(text, verdicts):
         [
             {
                 "role": "system",
-                "content": (
-                    "你是修订员。按核查结论改写草稿：删掉没有出处的引用或降级为推测，"
-                    "事实错误改对，绝对化措辞软化，建议补一两个替代方案。只输出修订后的正文。"
-                ),
+                "content": prompts.REVISE_SYSTEM,
             },
             {
                 "role": "user",
@@ -131,16 +132,7 @@ def search(claim_text, max_results=2):
 
 def llm_verify_claim(claim_text, cfg=None):
     """单条断言核查（评测用）：返回 {status, confidence, evidence_url, snippet}。"""
-    prompt = (
-        "你是核查员。判断下面这条断言：\n"
-        f"「{claim_text}」\n"
-        "输出 JSON：{"
-        '"status": "supported|unsupported|refuted", '
-        '"confidence": 0-1, '
-        '"evidence_url": "能给就给出处 URL，否则空串", '
-        '"snippet": "一句原文依据"'
-        "}\n只输出 JSON。"
-    )
+    prompt = prompts.verify_user(claim_text)
     out = chat([{"role": "user", "content": prompt}], max_tokens=300, temperature=0)
     start, end = out.find("{"), out.rfind("}")
     data = json.loads(out[start : end + 1])

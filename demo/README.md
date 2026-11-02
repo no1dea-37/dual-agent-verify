@@ -26,7 +26,7 @@ python3 demo_dual_agent.py --off      # 对照组：单 agent，不核查
 [verifier] 搜证据（mock）──► verdict ────────┤
    │  supported / unsupported / refuted     │
    ▼                                        │
-[rubric] 建议层打分：替代方案 / 确定性 / 边界 / 利益
+[rubric] 建议层打分：替代方案 / 前提假设 / 信息充分性 / 确定性 / 边界 / 利益
    │                                        │
    ▼                                        │
 [controller] 修订：删无出处引用、软化绝对话 ◄──┘
@@ -58,6 +58,18 @@ python3 demo_dual_agent.py --off      # 对照组：单 agent，不核查
 - 建议层的 rubric 是启发式，真实场景要按领域重写判据；
 - mock 证据库只为演示控制流，不是真实检索；
 - 成本：双 agent 总 token 通常 1.3–2 倍；省钱靠「小模型验证 + 高风险抽样 + 工具化验证」。
+
+## 评测与校准
+
+```bash
+cd eval
+python3 evaluate.py              # baseline 管线自检
+python3 evaluate.py --llm        # 真模型版本（DEEPSEEK_API_KEY）
+python3 evaluate.py --calibrate  # 置信度校准（保序回归 + Brier）
+python3 check_prompts.py         # prompt 防漂移检查
+```
+
+prompt 统一放在 `prompts.py`，`index.js` 用的是同一份文本，`check_prompts.py` 会比对。
 
 ## 演进方向
 

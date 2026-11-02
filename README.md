@@ -50,8 +50,23 @@ python3 demo_dual_agent.py --llm      # actor/verifier/revisor 全走真模型
 
 `workflow_demo.js` 是 DSH workflow 版：actor → verifier（真 web_search）→ revisor。
 
+### 评测（demo/eval）
+
+```bash
+cd demo/eval
+python3 evaluate.py                 # 无 key：启发式 baseline，验证评测流程（37 条事实/引用 + 3 条建议）
+python3 evaluate.py --llm           # 真模型逐条核查（读 DEEPSEEK_API_KEY）
+python3 evaluate.py --calibrate     # 额外做置信度校准（保序回归，留出集评估 Brier）
+python3 calibrate.py --selftest     # 校准模块自检
+python3 check_prompts.py            # 检查 demo/prompts.py 与 index.js 的 SYSTEM_PROMPT 是否一致
+```
+
+评测集 `demo/eval/cases.jsonl` 是 40 条人工标注（supported / unsupported / refuted / advice），
+输出混淆矩阵、precision/recall/F1 与置信度分箱。prompt 文本集中在 `demo/prompts.py`，插件里是同一份副本，
+`check_prompts.py` 做字符串比对防漂移。
+
 ## 已知边界
 
-- 建议层只做 rubric 打分（后果 / 利益 / 确定性 / 替代方案 / 边界），不判「对错」。
+- 建议层只做 rubric 打分（替代方案 / 前提假设 / 信息充分性 / 确定性 / 边界 / 利益），不判「对错」。
 - 每次调用 = 1 次模型调用；按次成本记在账上。
 - 模型未配置时工具直接报错，不会静默假装通过。
